@@ -70,16 +70,11 @@ function isOutsideCorner(x, y, width, height, radius) {
 }
 
 /**
- * Draws Hitar's unified Electric Blue-Cyan professional logo emblem.
+ * Draws Hitar's non-globe custom "H" Translation Badge logo pixels.
  */
 function drawHitarIconPixels(width, height) {
   const rgba = Buffer.alloc(width * height * 4);
   const radius = Math.floor(width * 0.28);
-
-  const cx = width / 2;
-  const cy = height / 2;
-  const ringRadius = width * 0.26;
-  const ringThickness = Math.max(1, width * 0.08);
 
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
@@ -93,17 +88,28 @@ function drawHitarIconPixels(width, height) {
       const nx = x / width;
       const ny = y / height;
 
-      // Professional Electric Blue (#2563eb) -> Cyan (#06b6d4) gradient
-      const r = Math.floor(37 - nx * 30 + ny * 20);
-      const g = Math.floor(99 + nx * 80 + ny * 20);
-      const b = Math.floor(235 - ny * 20);
+      // Deep Blue (#1e40af) -> Electric Blue (#3b82f6) -> Cyan (#06b6d4)
+      const r = Math.floor(30 + nx * 30 + ny * 20);
+      const g = Math.floor(64 + nx * 66 + ny * 20);
+      const b = Math.floor(175 + nx * 70 - ny * 20);
 
-      const dist = Math.hypot(x - cx, y - cy);
+      // Draw custom non-globe Hitar emblem: Bold "H" with forward translate arrow bar
       let isEmblem = false;
+      const stroke = Math.max(1, Math.floor(width * 0.12));
+      const leftCol = Math.floor(width * 0.22);
+      const rightCol = Math.floor(width * 0.66);
+      const midRow = Math.floor(height * 0.48);
 
-      if (Math.abs(dist - ringRadius) <= ringThickness / 2) {
+      // Left bar of H
+      if (x >= leftCol && x < leftCol + stroke && y >= height * 0.2 && y <= height * 0.8) {
         isEmblem = true;
-      } else if (Math.abs(y - cy) <= ringThickness / 2 && Math.abs(x - cx) <= ringRadius * 1.1) {
+      }
+      // Right bar of H
+      if (x >= rightCol && x < rightCol + stroke && y >= height * 0.2 && y <= height * 0.8) {
+        isEmblem = true;
+      }
+      // Center crossbar of H
+      if (y >= midRow - stroke / 2 && y <= midRow + stroke / 2 && x >= leftCol && x <= rightCol + stroke) {
         isEmblem = true;
       }
 
@@ -138,7 +144,7 @@ for (const size of sizes) {
   for (const iconDir of iconDirs) {
     fs.writeFileSync(path.join(iconDir, `${size}.png`), pngBuf);
   }
-  console.log(`Generated logo icon ${size}.png`);
+  console.log(`Generated non-globe custom logo icon ${size}.png`);
 }
 
 const promoPixels = drawHitarIconPixels(440, 280);
