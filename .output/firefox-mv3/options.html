@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hitar Settings & Preferences</title>
-    <script type="module" crossorigin src="/chunks/options-CilEqVK2.js"></script>
+    <script type="module" crossorigin src="/chunks/options-BjCUDwnS.js"></script>
     <link rel="modulepreload" crossorigin href="/chunks/translator-client-BDAKKtVu.js">
     <link rel="stylesheet" crossorigin href="/assets/translator-client-JOAZR2fR.css">
   </head>
@@ -70,7 +70,7 @@
           </h2>
           <p class="text-xs text-slate-500 dark:text-slate-400">Pages on these domains automatically translate upon load.</p>
           <div class="flex gap-2">
-            <input type="text" id="add-always-domain-input" placeholder="example.com" class="flex-1 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <input type="text" id="add-always-domain-input" aria-label="Always translate domain name" placeholder="example.com" class="flex-1 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
             <button id="add-always-domain-btn" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-medium rounded-lg">Add</button>
           </div>
           <ul id="always-domains-list" class="flex flex-col gap-1 max-h-36 overflow-y-auto text-xs">
@@ -86,7 +86,7 @@
           </h2>
           <p class="text-xs text-slate-500 dark:text-slate-400">Translation is disabled on these domains.</p>
           <div class="flex gap-2">
-            <input type="text" id="add-never-domain-input" placeholder="internal.work" class="flex-1 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <input type="text" id="add-never-domain-input" aria-label="Never translate domain name" placeholder="internal.work" class="flex-1 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
             <button id="add-never-domain-btn" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-medium rounded-lg">Add</button>
           </div>
           <ul id="never-domains-list" class="flex flex-col gap-1 max-h-36 overflow-y-auto text-xs">
@@ -116,10 +116,10 @@
           <div class="flex flex-col gap-3">
             <div class="flex flex-col gap-1">
               <div class="flex justify-between text-xs font-medium">
-                <span>Batch Character Budget</span>
+                <label for="budget-slider" class="cursor-pointer">Batch Character Budget</label>
                 <span id="budget-value" class="text-brand-600 font-bold">2000 chars</span>
               </div>
-              <input type="range" id="budget-slider" min="500" max="5000" step="250" value="2000" class="w-full accent-brand-600 cursor-pointer">
+              <input type="range" id="budget-slider" aria-label="Batch character budget slider" min="500" max="5000" step="250" value="2000" class="w-full accent-brand-600 cursor-pointer">
               <p class="text-[11px] text-slate-400">Controls maximum characters sent per translation HTTP request.</p>
             </div>
 

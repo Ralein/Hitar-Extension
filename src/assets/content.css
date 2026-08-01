@@ -149,8 +149,14 @@
 }
 
 .hitar-error-text {
-  color: #ef4444;
+  color: #dc2626;
   font-size: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .hitar-error-text {
+    color: #f87171;
+  }
 }
 
 .hitar-card-footer {
