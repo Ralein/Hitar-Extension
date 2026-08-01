@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hitar Settings & Preferences</title>
-    <script type="module" crossorigin src="/chunks/options-CM4i6IR3.js"></script>
-    <link rel="modulepreload" crossorigin href="/chunks/translator-client-BwSAlpXz.js">
-    <link rel="stylesheet" crossorigin href="/assets/translator-client-BqR0Y2Dz.css">
+    <script type="module" crossorigin src="/chunks/options-CflExMdj.js"></script>
+    <link rel="modulepreload" crossorigin href="/chunks/translator-client-BpZor7pu.js">
+    <link rel="stylesheet" crossorigin href="/assets/translator-client-CJQt68Z_.css">
   </head>
   <body class="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
     <div class="max-w-4xl mx-auto px-4 py-8 flex flex-col gap-6">
@@ -15,7 +15,7 @@
       <header class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800">
         <div class="flex items-center gap-3.5">
           <!-- Globe Translation Emblem -->
-          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-400 via-teal-500 to-indigo-600 flex items-center justify-center text-white shadow-xl shadow-teal-500/30 ring-2 ring-white/20 transform hover:scale-105 transition-all">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 via-blue-500 to-cyan-400 flex items-center justify-center text-white shadow-xl shadow-blue-500/30 ring-2 ring-white/20 transform hover:scale-105 transition-all">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
               <circle cx="12" cy="12" r="9" />
               <path stroke-linecap="round" stroke-linejoin="round" d="M3.6 9h16.8M3.6 15h16.8M12 3a14.5 14.5 0 010 18 14.5 14.5 0 010-18z" />
@@ -24,7 +24,7 @@
           <div>
             <div class="flex items-center gap-2">
               <h1 class="text-xl font-extrabold tracking-tight">Hitar Dashboard</h1>
-              <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 uppercase tracking-wider border border-emerald-500/20">100% Free &amp; Open</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-500/10 text-blue-600 dark:text-blue-400 uppercase tracking-wider border border-blue-500/20">100% Free &amp; Open</span>
             </div>
             <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Configure multi-engine backends, zero-paid API rules, domain preferences, and cache tuning.</p>
           </div>
@@ -37,9 +37,9 @@
       </header>
 
       <!-- Free Tier Engine Banner -->
-      <div class="p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-teal-950 to-slate-900 text-white shadow-xl border border-teal-500/30 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
+      <div class="p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white shadow-xl border border-blue-500/30 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
         <div class="flex flex-col gap-1">
-          <div class="flex items-center gap-2 font-bold text-sm text-teal-400">
+          <div class="flex items-center gap-2 font-bold text-sm text-cyan-400">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
             Zero Paid API Keys Required
           </div>
@@ -55,7 +55,7 @@
             <h2 class="text-base font-bold">Free Translation Engines &amp; Priority</h2>
             <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Endpoints are queried in priority order. If one fails or rate-limits, Hitar automatically fails over to the next engine seamlessly.</p>
           </div>
-          <button id="add-endpoint-btn" class="px-3.5 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 active:scale-[0.98] text-white text-xs font-bold transition-all shadow-md shadow-teal-500/20 cursor-pointer">
+          <button id="add-endpoint-btn" class="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white text-xs font-bold transition-all shadow-md shadow-blue-500/20 cursor-pointer">
             + Add Endpoint
           </button>
         </div>
@@ -75,7 +75,7 @@
           </h2>
           <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Pages on these domains automatically translate upon load.</p>
           <div class="flex gap-2">
-            <input type="text" id="add-always-domain-input" aria-label="Always translate domain name" placeholder="example.com" class="flex-1 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all">
+            <input type="text" id="add-always-domain-input" aria-label="Always translate domain name" placeholder="example.com" class="flex-1 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
             <button id="add-always-domain-btn" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-bold rounded-xl transition-all cursor-pointer">Add</button>
           </div>
           <ul id="always-domains-list" class="flex flex-col gap-1.5 max-h-36 overflow-y-auto text-xs">
@@ -91,7 +91,7 @@
           </h2>
           <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Translation is disabled on these domains.</p>
           <div class="flex gap-2">
-            <input type="text" id="add-never-domain-input" aria-label="Never translate domain name" placeholder="internal.work" class="flex-1 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all">
+            <input type="text" id="add-never-domain-input" aria-label="Never translate domain name" placeholder="internal.work" class="flex-1 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
             <button id="add-never-domain-btn" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-bold rounded-xl transition-all cursor-pointer">Add</button>
           </div>
           <ul id="never-domains-list" class="flex flex-col gap-1.5 max-h-36 overflow-y-auto text-xs">
@@ -122,9 +122,9 @@
             <div class="flex flex-col gap-1.5">
               <div class="flex justify-between text-xs font-semibold">
                 <label for="budget-slider" class="cursor-pointer">Batch Character Budget</label>
-                <span id="budget-value" class="text-teal-600 dark:text-teal-400 font-extrabold">2000 chars</span>
+                <span id="budget-value" class="text-blue-600 dark:text-blue-400 font-extrabold">2000 chars</span>
               </div>
-              <input type="range" id="budget-slider" aria-label="Batch character budget slider" min="500" max="5000" step="250" value="2000" class="w-full accent-teal-600 cursor-pointer">
+              <input type="range" id="budget-slider" aria-label="Batch character budget slider" min="500" max="5000" step="250" value="2000" class="w-full accent-blue-600 cursor-pointer">
               <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Controls maximum characters sent per translation HTTP request.</p>
             </div>
 
@@ -132,7 +132,7 @@
 
             <label class="flex items-center justify-between text-xs font-semibold cursor-pointer">
               <span>Auto-translate all sites on load</span>
-              <input type="checkbox" id="auto-translate-load-chk" class="w-4 h-4 rounded text-teal-600 focus:ring-teal-500 cursor-pointer">
+              <input type="checkbox" id="auto-translate-load-chk" class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 cursor-pointer">
             </label>
           </div>
         </div>
