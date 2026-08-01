@@ -2,6 +2,14 @@ import browser from 'webextension-polyfill';
 import { ExtensionSettings, TranslationEndpoint, MessageResponse } from '@/lib/types';
 import { DEFAULT_ENDPOINTS } from '@/lib/translator-client';
 
+function escapeHtml(str: string): string {
+  return str
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   const saveBadge = document.getElementById('save-status-badge') as HTMLElement;
   const addEndpointBtn = document.getElementById('add-endpoint-btn') as HTMLButtonElement;
@@ -64,6 +72,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       currentSettings = resp.data;
       showSavedToast();
     }
+  }
+
+  function removeDomainRule(domain: string, ruleType: 'always' | 'never') {
+    if (ruleType === 'always') {
+      const updated = currentSettings.alwaysTranslateDomains.filter((d) => d !== domain);
+      persist({ alwaysTranslateDomains: updated });
+    } else {
+      const updated = currentSettings.neverTranslateDomains.filter((d) => d !== domain);
+      persist({ neverTranslateDomains: updated });
+    }
+    renderSiteRules();
   }
 
   function renderEndpoints() {
@@ -173,11 +192,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <span class="font-mono text-slate-700 dark:text-slate-300">${escapeHtml(domain)}</span>
         <button class="remove-btn text-rose-500 hover:text-rose-700 font-bold px-1">&times;</button>
       `;
-      li.querySelector('.remove-btn')?.addEventListener('click', () => {
-        const updated = currentSettings.alwaysTranslateDomains.filter((d) => d !== domain);
-        persist({ alwaysTranslateDomains: updated });
-        renderSiteRules();
-      });
+      li.querySelector('.remove-btn')?.addEventListener('click', () => removeDomainRule(domain, 'always'));
       alwaysList.appendChild(li);
     });
 
@@ -190,11 +205,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <span class="font-mono text-slate-700 dark:text-slate-300">${escapeHtml(domain)}</span>
         <button class="remove-btn text-rose-500 hover:text-rose-700 font-bold px-1">&times;</button>
       `;
-      li.querySelector('.remove-btn')?.addEventListener('click', () => {
-        const updated = currentSettings.neverTranslateDomains.filter((d) => d !== domain);
-        persist({ neverTranslateDomains: updated });
-        renderSiteRules();
-      });
+      li.querySelector('.remove-btn')?.addEventListener('click', () => removeDomainRule(domain, 'never'));
       neverList.appendChild(li);
     });
   }
@@ -245,10 +256,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   autoTranslateChk.addEventListener('change', () => {
     persist({ autoTranslateOnLoad: autoTranslateChk.checked });
   });
-
-  function escapeHtml(str: string): string {
-    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
 
   await loadSettings();
 });

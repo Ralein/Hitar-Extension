@@ -11,6 +11,14 @@ import { showSelectionPopover } from '@/lib/selection-popover';
 import { MessageResponse } from '@/lib/types';
 import '@/assets/content.css';
 
+function detectDocLang(): string {
+  const htmlLang = document.documentElement.lang || document.body?.getAttribute('lang');
+  if (htmlLang && htmlLang.length >= 2) {
+    return htmlLang.slice(0, 2).toLowerCase();
+  }
+  return 'auto';
+}
+
 export default defineContentScript({
   matches: ['<all_urls>'],
   runAt: 'document_idle',
@@ -22,14 +30,6 @@ export default defineContentScript({
     let mutationBuffer: Node[] = [];
     let debounceTimer: ReturnType<typeof setTimeout> | null = null;
     let currentTargetLang = 'es';
-
-    function detectDocLang(): string {
-      const htmlLang = document.documentElement.lang || document.body?.getAttribute('lang');
-      if (htmlLang && htmlLang.length >= 2) {
-        return htmlLang.slice(0, 2).toLowerCase();
-      }
-      return 'auto';
-    }
 
     async function translatePage(targetLang?: string) {
       const settingsResp: MessageResponse = await browser.runtime.sendMessage({ type: 'GET_SETTINGS' });

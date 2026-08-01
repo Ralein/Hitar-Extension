@@ -44,7 +44,7 @@ describe('DOM Walker Utilities', () => {
     const p = document.getElementById('target')!;
     const nodeInfos = collectTextNodes(p);
 
-    expect(nodeInfos.length).toBe(1);
+    expect(nodeInfos).toHaveLength(1);
 
     applyNodeTranslations(nodeInfos, ['Hola Mundo']);
     expect(p.textContent).toBe('Hola Mundo');

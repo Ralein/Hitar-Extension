@@ -9,10 +9,10 @@ const DEFAULT_MAX_ENTRIES = 20000;
 export class TranslationCache {
   private dbPromise: Promise<IDBDatabase> | null = null;
 
-  constructor(private maxEntries: number = DEFAULT_MAX_ENTRIES) {}
+  constructor(private readonly maxEntries: number = DEFAULT_MAX_ENTRIES) {}
 
   private getDB(): Promise<IDBDatabase> {
-    if (this.dbPromise) return this.dbPromise;
+    if (this.dbPromise !== null) return this.dbPromise;
 
     this.dbPromise = new Promise((resolve, reject) => {
       if (typeof indexedDB === 'undefined') {

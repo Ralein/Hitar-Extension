@@ -13,7 +13,7 @@ describe('createBatches', () => {
     expect(batches.length).toBeGreaterThan(1);
     batches.forEach((batch) => {
       expect(batch.texts.length).toBeGreaterThan(0);
-      expect(batch.indices.length).toBe(batch.texts.length);
+      expect(batch.indices).toHaveLength(batch.texts.length);
     });
   });
 
@@ -21,7 +21,7 @@ describe('createBatches', () => {
     const texts = ['Short', 'A very long string that exceeds budget by itself', 'End'];
     const batches = createBatches(texts, 15);
 
-    expect(batches.length).toBe(3);
+    expect(batches).toHaveLength(3);
     expect(batches[1].texts[0]).toContain('very long string');
     expect(batches[1].indices[0]).toBe(1);
   });
@@ -30,7 +30,7 @@ describe('createBatches', () => {
     const texts = ['One', 'Two', 'Three', 'Four'];
     const batches = createBatches(texts, 1000);
 
-    expect(batches.length).toBe(1);
+    expect(batches).toHaveLength(1);
     expect(batches[0].indices).toEqual([0, 1, 2, 3]);
   });
 });

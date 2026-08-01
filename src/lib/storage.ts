@@ -20,7 +20,7 @@ const STORAGE_KEY = 'hitar_settings';
 export async function getSettings(): Promise<ExtensionSettings> {
   try {
     const res = await browser.storage.local.get(STORAGE_KEY);
-    if (res && res[STORAGE_KEY]) {
+    if (res?.[STORAGE_KEY]) {
       return { ...DEFAULT_SETTINGS, ...res[STORAGE_KEY] };
     }
   } catch (err) {

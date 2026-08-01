@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   let currentHost = '';
   let isTranslatedState = false;
 
-  // Fetch current active tab and settings
   const tabs = await browser.tabs.query({ active: true, currentWindow: true });
   activeTab = tabs[0] || null;
 
@@ -35,11 +34,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     currentHostEl.textContent = 'Active Page';
   }
 
-  // Get current extension settings
   const settingsResp: MessageResponse<ExtensionSettings> = await browser.runtime.sendMessage({ type: 'GET_SETTINGS' });
   const settings: ExtensionSettings = settingsResp?.data || ({} as ExtensionSettings);
 
-  // Theme setup
   applyTheme(settings.theme || 'system');
 
   themeToggleBtn.addEventListener('click', async () => {
@@ -53,10 +50,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   function applyTheme(theme: 'system' | 'light' | 'dark') {
-    let dark = false;
-    if (theme === 'dark') dark = true;
-    else if (theme === 'light') dark = false;
-    else dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const dark =
+      theme === 'dark'
+        ? true
+        : theme === 'light'
+          ? false
+          : window.matchMedia('(prefers-color-scheme: dark)').matches;
 
     if (dark) {
       document.documentElement.classList.add('dark');
@@ -69,7 +68,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // Target language setup
   const siteTarget = currentHost ? settings.perSiteTargetLangs?.[currentHost] : null;
   targetLangSelect.value = siteTarget || settings.defaultTargetLang || 'es';
 
@@ -84,7 +82,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  // Host rule setup
   const isAlways = settings.alwaysTranslateDomains?.includes(currentHost);
   const isNever = settings.neverTranslateDomains?.includes(currentHost);
 
@@ -128,7 +125,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // Toggle Translate button
   toggleBtn.addEventListener('click', async () => {
     if (!activeTab?.id) return;
     const targetLang = targetLangSelect.value;
@@ -159,7 +155,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // Options Page button
   openOptionsBtn.addEventListener('click', () => {
     if (browser.runtime.openOptionsPage) {
       browser.runtime.openOptionsPage();

@@ -9,7 +9,7 @@ describe('Hash & CacheKey Utilities', () => {
 
     expect(hash1).toBe(hash2);
     expect(hash1).not.toBe(hash3);
-    expect(hash1.length).toBe(8);
+    expect(hash1).toHaveLength(8);
   });
 
   it('generates unique cache keys for different languages or text', () => {

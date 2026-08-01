@@ -32,7 +32,10 @@ export async function withExponentialBackoff<T>(
       }
 
       const delay = baseDelayMs * Math.pow(2, attempt - 1);
-      const jitter = Math.random() * 100;
+      const randomVal = typeof crypto !== 'undefined' && crypto.getRandomValues
+        ? crypto.getRandomValues(new Uint32Array(1))[0] / 0xffffffff
+        : Math.random();
+      const jitter = randomVal * 100;
       await new Promise((resolve) => setTimeout(resolve, delay + jitter));
     }
   }

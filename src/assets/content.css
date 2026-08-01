@@ -104,10 +104,16 @@
 
 .hitar-source-text {
   font-size: 12px;
-  color: #64748b;
+  color: #334155;
   font-style: italic;
   border-left: 2px solid #0284c7;
   padding-left: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .hitar-source-text {
+    color: #94a3b8;
+  }
 }
 
 .hitar-result-area {

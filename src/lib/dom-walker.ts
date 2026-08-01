@@ -31,9 +31,9 @@ export function isElementIgnored(element: Element | null): boolean {
   while (curr) {
     const tagName = (curr.tagName || '').toUpperCase();
     if (IGNORED_TAGS.has(tagName)) return true;
-    if (curr.getAttribute && curr.getAttribute('translate') === 'no') return true;
-    if (curr.classList && curr.classList.contains('notranslate')) return true;
-    if (curr.hasAttribute && curr.hasAttribute('data-hitar-ignore')) return true;
+    if (curr.getAttribute?.('translate') === 'no') return true;
+    if (curr.classList?.contains('notranslate')) return true;
+    if ((curr as HTMLElement).dataset?.hitarIgnore !== undefined) return true;
     if ((curr as HTMLElement).isContentEditable) return true;
     curr = curr.parentElement;
   }
@@ -46,13 +46,11 @@ export function isElementIgnored(element: Element | null): boolean {
 export function isTranslatableText(text: string): boolean {
   const trimmed = text.trim();
   if (!trimmed || trimmed.length < 2) return false;
-  // Must contain at least one unicode letter character
   return /\p{L}/u.test(trimmed);
 }
 
 /**
  * Collects all translatable Text nodes inside a container using recursive DOM traversal.
- * Guarantees consistent behavior across all browsers and test environments (happy-dom/jsdom).
  */
 export function collectTextNodes(container: Node = document.body): TranslatableNodeInfo[] {
   const result: TranslatableNodeInfo[] = [];
@@ -68,7 +66,7 @@ export function collectTextNodes(container: Node = document.body): TranslatableN
       if (!parent || isElementIgnored(parent)) return;
 
       if (
-        parent.hasAttribute('data-hitar-translated') ||
+        (parent as HTMLElement).dataset?.hitarTranslated === 'true' ||
         parent.classList.contains('hitar-translating')
       ) {
         return;
@@ -85,8 +83,8 @@ export function collectTextNodes(container: Node = document.body): TranslatableN
       const element = node as Element;
       if (isElementIgnored(element)) return;
 
-      for (let i = 0; i < node.childNodes.length; i++) {
-        traverse(node.childNodes[i]);
+      for (const child of Array.from(node.childNodes)) {
+        traverse(child);
       }
     }
   }
@@ -130,7 +128,7 @@ export function applyNodeTranslations(
     if (translatedText && translatedText !== originalText) {
       node.nodeValue = translatedText;
       if (parent) {
-        parent.setAttribute('data-hitar-translated', 'true');
+        (parent as HTMLElement).dataset.hitarTranslated = 'true';
       }
     }
   });
@@ -149,12 +147,12 @@ export function revertTranslations(container: Node = document.body) {
           textNode.nodeValue = originalTextMap.get(textNode)!;
         }
       } else if (node.nodeType === Node.ELEMENT_NODE) {
-        for (let i = 0; i < node.childNodes.length; i++) {
-          traverse(node.childNodes[i]);
+        for (const child of Array.from(node.childNodes)) {
+          traverse(child);
         }
       }
     }
     traverse(el);
-    el.removeAttribute('data-hitar-translated');
+    delete (el as HTMLElement).dataset.hitarTranslated;
   });
 }
