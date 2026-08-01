@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hitar Translator</title>
-    <script type="module" crossorigin src="/chunks/popup-BSca0Tkb.js"></script>
-    <link rel="modulepreload" crossorigin href="/chunks/translator-client-DbqNIb6i.js">
-    <link rel="stylesheet" crossorigin href="/assets/translator-client-BtYo4vDA.css">
+    <script type="module" crossorigin src="/chunks/popup-BfMiA6fh.js"></script>
+    <link rel="modulepreload" crossorigin href="/chunks/translator-client-BwY669qP.js">
+    <link rel="stylesheet" crossorigin href="/assets/translator-client-CwxdRDEP.css">
   </head>
   <body class="w-[340px] p-4 select-none antialiased bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
     <div id="app" class="flex flex-col gap-3.5">
@@ -14,11 +14,17 @@
       <!-- Minimal Professional Header -->
       <header class="flex items-center justify-between pb-2.5 border-b border-slate-200/60 dark:border-slate-800/60">
         <div class="flex items-center gap-2.5">
-          <!-- Hitar Signature Translation Badge -->
-          <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-400 flex items-center justify-center text-white shadow-md shadow-blue-500/25 ring-1 ring-white/20">
-            <svg class="w-4.5 h-4.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6 8h12M15 5l3 3-3 3" />
-              <path d="M18 16H6M9 13l-3 3 3 3" />
+          <!-- Hitar Mark: Stylised "H" with ⇄ translation crossbar -->
+          <div class="w-8 h-8 rounded-xl bg-gradient-to-b from-blue-800 to-cyan-500 flex items-center justify-center text-white shadow-md shadow-blue-500/25 ring-1 ring-white/20">
+            <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+              <!-- H verticals -->
+              <path d="M7 4v16M17 4v16" />
+              <!-- Crossbar -->
+              <path d="M7 12h10" />
+              <!-- Left arrowhead ◂ -->
+              <path d="M10 9L7 12l3 3" />
+              <!-- Right arrowhead ▸ -->
+              <path d="M14 9l3 3-3 3" />
             </svg>
           </div>
           <div>

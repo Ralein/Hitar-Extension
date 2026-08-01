@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hitar Settings & Preferences</title>
-    <script type="module" crossorigin src="/chunks/options-B2TbP8fs.js"></script>
-    <link rel="modulepreload" crossorigin href="/chunks/translator-client-DbqNIb6i.js">
-    <link rel="stylesheet" crossorigin href="/assets/translator-client-BtYo4vDA.css">
+    <script type="module" crossorigin src="/chunks/options-DJUCLKHR.js"></script>
+    <link rel="modulepreload" crossorigin href="/chunks/translator-client-BwY669qP.js">
+    <link rel="stylesheet" crossorigin href="/assets/translator-client-CwxdRDEP.css">
   </head>
   <body class="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
     <div class="max-w-4xl mx-auto px-4 py-8 flex flex-col gap-6">
@@ -14,11 +14,17 @@
       <!-- Top Header -->
       <header class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800">
         <div class="flex items-center gap-3.5">
-          <!-- Hitar Signature Translation Badge -->
-          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-400 flex items-center justify-center text-white shadow-xl shadow-blue-500/30 ring-2 ring-white/20 transform hover:scale-105 transition-all">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6 8h12M15 5l3 3-3 3" />
-              <path d="M18 16H6M9 13l-3 3 3 3" />
+          <!-- Hitar Mark: Stylised "H" with ⇄ translation crossbar -->
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-b from-blue-800 to-cyan-500 flex items-center justify-center text-white shadow-xl shadow-blue-500/30 ring-2 ring-white/20 transform hover:scale-105 transition-all">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+              <!-- H verticals -->
+              <path d="M7 4v16M17 4v16" />
+              <!-- Crossbar -->
+              <path d="M7 12h10" />
+              <!-- Left arrowhead ◂ -->
+              <path d="M10 9L7 12l3 3" />
+              <!-- Right arrowhead ▸ -->
+              <path d="M14 9l3 3-3 3" />
             </svg>
           </div>
           <div>
