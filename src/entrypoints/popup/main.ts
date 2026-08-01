@@ -50,12 +50,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   function applyTheme(theme: 'system' | 'light' | 'dark') {
-    const dark =
-      theme === 'dark'
-        ? true
-        : theme === 'light'
-          ? false
-          : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (theme === 'dark') {
+      dark = true;
+    } else if (theme === 'light') {
+      dark = false;
+    }
 
     if (dark) {
       document.documentElement.classList.add('dark');
