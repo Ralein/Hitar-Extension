@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hitar Translator</title>
-    <script type="module" crossorigin src="/chunks/popup-BwZ8dL9M.js"></script>
-    <link rel="modulepreload" crossorigin href="/chunks/translator-client-C2hJHp_6.js">
-    <link rel="stylesheet" crossorigin href="/assets/translator-client-BitYn3_v.css">
+    <script type="module" crossorigin src="/chunks/popup-Dk9DuY3i.js"></script>
+    <link rel="modulepreload" crossorigin href="/chunks/translator-client-BwSAlpXz.js">
+    <link rel="stylesheet" crossorigin href="/assets/translator-client-BqR0Y2Dz.css">
   </head>
   <body class="w-[340px] p-4 select-none antialiased bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
     <div id="app" class="flex flex-col gap-3.5">
@@ -14,14 +14,17 @@
       <!-- Minimal Header -->
       <header class="flex items-center justify-between pb-2.5 border-b border-slate-200/60 dark:border-slate-800/60">
         <div class="flex items-center gap-2.5">
-          <!-- Sleek Hitar Monogram Orb -->
-          <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-violet-600 via-indigo-500 to-cyan-400 flex items-center justify-center text-white font-black text-sm shadow-lg shadow-indigo-500/25 ring-1 ring-white/20">
-            H
+          <!-- Sleek Hitar Logo Orb -->
+          <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-400 via-teal-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-teal-500/30 ring-1 ring-white/20">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+              <circle cx="12" cy="12" r="9" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.6 9h16.8M3.6 15h16.8M12 3a14.5 14.5 0 010 18 14.5 14.5 0 010-18z" />
+            </svg>
           </div>
           <div>
             <div class="flex items-center gap-1.5">
               <h1 class="text-sm font-extrabold tracking-tight text-slate-900 dark:text-white">Hitar</h1>
-              <span class="px-1.5 py-0.2 rounded-full text-[9px] font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 uppercase tracking-wider border border-indigo-500/20">FREE</span>
+              <span class="px-1.5 py-0.2 rounded-full text-[9px] font-bold bg-teal-500/10 text-teal-600 dark:text-teal-400 uppercase tracking-wider border border-teal-500/20">FREE</span>
             </div>
             <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Live Page Translator</p>
           </div>
@@ -53,13 +56,13 @@
               ~150ms Engine
             </span>
           </div>
-          <select id="target-lang" aria-label="Translate To language" class="w-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 rounded-xl px-2.5 py-1.5 text-xs font-bold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all cursor-pointer">
+          <select id="target-lang" aria-label="Translate To language" class="w-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 rounded-xl px-2.5 py-1.5 text-xs font-bold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all cursor-pointer">
             <!-- Dynamically populated -->
           </select>
         </div>
 
         <!-- Primary Action Button -->
-        <button id="toggle-translate-btn" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-500 hover:from-violet-500 hover:to-indigo-400 active:scale-[0.98] text-white font-extrabold text-xs tracking-wide shadow-md shadow-indigo-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer">
+        <button id="toggle-translate-btn" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-teal-600 via-emerald-600 to-indigo-600 hover:from-teal-500 hover:to-indigo-500 active:scale-[0.98] text-white font-extrabold text-xs tracking-wide shadow-md shadow-teal-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer">
           <svg id="btn-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="m3 5 8 8 8-8" />
           </svg>
@@ -71,18 +74,18 @@
       <div class="glass-card p-3 flex flex-col gap-2">
         <label class="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300 cursor-pointer">
           <span>Always translate this site</span>
-          <input type="checkbox" id="always-translate-chk" class="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer">
+          <input type="checkbox" id="always-translate-chk" class="w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500 cursor-pointer">
         </label>
         <div class="h-px bg-slate-200/60 dark:bg-slate-800/60"></div>
         <label class="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300 cursor-pointer">
           <span>Never translate this site</span>
-          <input type="checkbox" id="never-translate-chk" class="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer">
+          <input type="checkbox" id="never-translate-chk" class="w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500 cursor-pointer">
         </label>
       </div>
 
       <!-- Footer -->
       <footer class="flex items-center justify-between pt-0.5 text-xs text-slate-500 dark:text-slate-400">
-        <button id="open-options" class="flex items-center gap-1.5 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all font-bold cursor-pointer">
+        <button id="open-options" class="flex items-center gap-1.5 hover:text-teal-600 dark:hover:text-teal-400 transition-all font-bold cursor-pointer">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />

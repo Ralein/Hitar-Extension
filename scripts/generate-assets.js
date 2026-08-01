@@ -70,11 +70,16 @@ function isOutsideCorner(x, y, width, height, radius) {
 }
 
 /**
- * Draws Hitar's vibrant new Violet-Indigo-Cyan logo pixels.
+ * Draws Hitar's new Emerald-Teal to Indigo futuristic translate emblem.
  */
 function drawHitarIconPixels(width, height) {
   const rgba = Buffer.alloc(width * height * 4);
-  const radius = Math.floor(width * 0.28);
+  const radius = Math.floor(width * 0.3);
+
+  const cx = width / 2;
+  const cy = height / 2;
+  const ringRadius = width * 0.26;
+  const ringThickness = Math.max(1, width * 0.08);
 
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
@@ -88,21 +93,19 @@ function drawHitarIconPixels(width, height) {
       const nx = x / width;
       const ny = y / height;
 
-      // Rich multi-color gradient: Violet (#7c3aed) -> Indigo (#4f46e5) -> Cyan (#06b6d4)
-      const r = Math.floor(124 - nx * 80 + ny * 10);
-      const g = Math.floor(58 + nx * 120 - ny * 20);
-      const b = Math.floor(237 - ny * 30);
+      // Vibrant Gradient: Emerald (#10b981) -> Teal (#14b8a6) -> Indigo (#6366f1)
+      const r = Math.floor(16 + nx * 80 + ny * 100);
+      const g = Math.floor(185 - nx * 100 + ny * 10);
+      const b = Math.floor(129 + nx * 110 + ny * 100);
 
-      // Draw distinctive white "H" emblem & arrows
+      // Distant from center for emblem circle ring
+      const dist = Math.hypot(x - cx, y - cy);
       let isEmblem = false;
-      const stroke = Math.max(1, Math.floor(width * 0.1));
-      const leftCol = Math.floor(width * 0.25);
-      const rightCol = Math.floor(width * 0.65);
-      const midRow = Math.floor(height * 0.48);
 
-      if ((x >= leftCol && x < leftCol + stroke && y >= height * 0.22 && y <= height * 0.78) ||
-          (x >= rightCol && x < rightCol + stroke && y >= height * 0.22 && y <= height * 0.78) ||
-          (y >= midRow - stroke / 2 && y <= midRow + stroke / 2 && x >= leftCol && x <= rightCol + stroke)) {
+      // Inner ring + translation cross line
+      if (Math.abs(dist - ringRadius) <= ringThickness / 2) {
+        isEmblem = true;
+      } else if (Math.abs(y - cy) <= ringThickness / 2 && Math.abs(x - cx) <= ringRadius * 1.1) {
         isEmblem = true;
       }
 
@@ -137,7 +140,7 @@ for (const size of sizes) {
   for (const iconDir of iconDirs) {
     fs.writeFileSync(path.join(iconDir, `${size}.png`), pngBuf);
   }
-  console.log(`Generated logo icon ${size}.png`);
+  console.log(`Generated new logo icon ${size}.png`);
 }
 
 const promoPixels = drawHitarIconPixels(440, 280);
