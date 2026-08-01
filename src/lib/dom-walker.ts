@@ -34,7 +34,7 @@ export function isElementIgnored(element: Element | null): boolean {
     if (curr.getAttribute && curr.getAttribute('translate') === 'no') return true;
     if (curr.classList && curr.classList.contains('notranslate')) return true;
     if (curr.hasAttribute && curr.hasAttribute('data-hitar-ignore')) return true;
-    if (curr.isContentEditable) return true;
+    if ((curr as HTMLElement).isContentEditable) return true;
     curr = curr.parentElement;
   }
   return false;

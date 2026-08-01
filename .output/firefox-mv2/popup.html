@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitar Translator</title>
+    <script type="module" crossorigin src="/chunks/popup-Bjijeb-g.js"></script>
+    <link rel="modulepreload" crossorigin href="/chunks/translator-client-BDAKKtVu.js">
+    <link rel="stylesheet" crossorigin href="/assets/translator-client-JOAZR2fR.css">
+  </head>
+  <body class="w-[340px] p-4 select-none antialiased">
+    <div id="app" class="flex flex-col gap-4">
+      <!-- Header -->
+      <header class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-600 to-brand-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m5 8 6 6 6-6" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="m4 14 6 6 6-6" />
+            </svg>
+          </div>
+          <div>
+            <h1 class="text-base font-bold tracking-tight text-slate-900 dark:text-white">Hitar</h1>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Live Page Translator</p>
+          </div>
+        </div>
+        <button id="theme-toggle" class="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="Toggle Theme">
+          <svg id="theme-icon-sun" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+          <svg id="theme-icon-moon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+        </button>
+      </header>
+
+      <!-- Active Site Status Badge -->
+      <div class="flex items-center justify-between px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50 text-xs">
+        <span id="current-host" class="font-medium truncate max-w-[180px] text-slate-700 dark:text-slate-300">detecting site...</span>
+        <span id="host-badge" class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400">DEFAULT</span>
+      </div>
+
+      <!-- Main Action Card -->
+      <div class="glass-card p-3 flex flex-col gap-3">
+        <!-- Target Language Selector -->
+        <div class="flex flex-col gap-1">
+          <label class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Translate To</label>
+          <select id="target-lang" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <option value="es">Spanish (Español)</option>
+            <option value="fr">French (Français)</option>
+            <option value="de">German (Deutsch)</option>
+            <option value="zh">Chinese (中文)</option>
+            <option value="ja">Japanese (日本語)</option>
+            <option value="pt">Portuguese (Português)</option>
+            <option value="it">Italian (Italiano)</option>
+            <option value="ru">Russian (Русский)</option>
+            <option value="ar">Arabic (العربية)</option>
+            <option value="hi">Hindi (हिन्दी)</option>
+            <option value="ko">Korean (한국어)</option>
+            <option value="nl">Dutch (Nederlands)</option>
+            <option value="pl">Polish (Polski)</option>
+            <option value="tr">Turkish (Türkçe)</option>
+            <option value="uk">Ukrainian (Українська)</option>
+          </select>
+        </div>
+
+        <!-- Primary Action Toggle Button -->
+        <button id="toggle-translate-btn" class="w-full py-2.5 px-4 rounded-lg bg-brand-600 hover:bg-brand-700 active:scale-[0.99] text-white font-semibold text-xs tracking-wide shadow-md shadow-brand-500/20 transition-all flex items-center justify-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m3 5 8 8 8-8" />
+          </svg>
+          <span id="btn-label">Translate Page</span>
+        </button>
+      </div>
+
+      <!-- Per-site preferences options -->
+      <div class="glass-card p-3 flex flex-col gap-2">
+        <label class="flex items-center justify-between text-xs font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
+          <span>Always translate this site</span>
+          <input type="checkbox" id="always-translate-chk" class="w-4 h-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500">
+        </label>
+        <div class="h-px bg-slate-200 dark:bg-slate-800"></div>
+        <label class="flex items-center justify-between text-xs font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
+          <span>Never translate this site</span>
+          <input type="checkbox" id="never-translate-chk" class="w-4 h-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500">
+        </label>
+      </div>
+
+      <!-- Footer Links -->
+      <footer class="flex items-center justify-between pt-1 text-xs text-slate-500 dark:text-slate-400">
+        <button id="open-options" class="flex items-center gap-1 hover:text-brand-600 dark:hover:text-brand-400 transition-colors font-medium">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span>Options &amp; Settings</span>
+        </button>
+        <span class="text-[10px] text-slate-400">v0.1.0</span>
+      </footer>
+    </div>
+  </body>
+</html>

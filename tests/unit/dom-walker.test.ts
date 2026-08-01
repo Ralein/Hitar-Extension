@@ -1,11 +1,9 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import {
   collectTextNodes,
-  isElementIgnored,
   isTranslatableText,
   applyNodeTranslations,
   revertTranslations,
-  originalTextMap,
 } from '../../src/lib/dom-walker';
 
 describe('DOM Walker Utilities', () => {

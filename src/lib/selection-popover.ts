@@ -3,14 +3,12 @@ export function showSelectionPopover(
   rect: DOMRect,
   onTranslate: (text: string) => Promise<{ translatedText: string; sourceLang?: string }>,
 ) {
-  // Remove any existing popovers
   removeSelectionPopover();
 
   const container = document.createElement('div');
   container.id = 'hitar-selection-popover';
   container.className = 'hitar-popover-root';
 
-  // Position popover near selection
   const top = Math.max(10, rect.bottom + window.scrollY + 8);
   const left = Math.min(
     window.innerWidth - 340,
@@ -62,7 +60,6 @@ export function showSelectionPopover(
   const closeBtn = container.querySelector('#hitar-popover-close');
   closeBtn?.addEventListener('click', removeSelectionPopover);
 
-  // Click outside to close
   const onClickOutside = (e: MouseEvent) => {
     if (!container.contains(e.target as Node)) {
       removeSelectionPopover();
@@ -71,11 +68,10 @@ export function showSelectionPopover(
   };
   setTimeout(() => document.addEventListener('mousedown', onClickOutside), 10);
 
-  // Perform translation request
   onTranslate(selectedText)
     .then(({ translatedText, sourceLang }) => {
       const resultArea = container.querySelector('#hitar-result-area');
-      const footer = container.querySelector('#hitar-card-footer');
+      const footer = container.querySelector('#hitar-card-footer') as HTMLElement | null;
 
       if (resultArea) {
         resultArea.innerHTML = `<div class="hitar-translated-text">${escapeHtml(translatedText)}</div>`;

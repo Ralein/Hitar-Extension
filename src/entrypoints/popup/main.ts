@@ -1,5 +1,5 @@
 import browser from 'webextension-polyfill';
-import { ExtensionSettings } from '@/lib/types';
+import { ExtensionSettings, MessageResponse } from '@/lib/types';
 import { setSiteRule } from '@/lib/storage';
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -36,8 +36,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // Get current extension settings
-  const settingsResp = await browser.runtime.sendMessage({ type: 'GET_SETTINGS' });
-  const settings: ExtensionSettings = settingsResp?.data || {};
+  const settingsResp: MessageResponse<ExtensionSettings> = await browser.runtime.sendMessage({ type: 'GET_SETTINGS' });
+  const settings: ExtensionSettings = settingsResp?.data || ({} as ExtensionSettings);
 
   // Theme setup
   applyTheme(settings.theme || 'system');
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!activeTab?.id) return;
     const targetLang = targetLangSelect.value;
     try {
-      const resp = await browser.tabs.sendMessage(activeTab.id, {
+      const resp: any = await browser.tabs.sendMessage(activeTab.id, {
         type: 'TOGGLE_TRANSLATION',
         targetLang,
       });

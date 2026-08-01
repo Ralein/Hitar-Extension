@@ -41,8 +41,8 @@ export default defineBackground(() => {
 
   // Central RPC Message Handler
   browser.runtime.onMessage.addListener(
-    (message: MessageType, _sender): Promise<MessageResponse> => {
-      return handleMessage(message);
+    (message: unknown, _sender: browser.Runtime.MessageSender): Promise<MessageResponse> => {
+      return handleMessage(message as MessageType);
     },
   );
 });

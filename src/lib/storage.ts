@@ -1,5 +1,5 @@
 import browser from 'webextension-polyfill';
-import { ExtensionSettings, TranslationEndpoint } from './types';
+import { ExtensionSettings } from './types';
 import { DEFAULT_ENDPOINTS } from './translator-client';
 
 export const DEFAULT_SETTINGS: ExtensionSettings = {

@@ -7,7 +7,8 @@ import {
   revertTranslations,
   TranslatableNodeInfo,
 } from '@/lib/dom-walker';
-import { showSelectionPopover, removeSelectionPopover } from '@/lib/selection-popover';
+import { showSelectionPopover } from '@/lib/selection-popover';
+import { MessageResponse } from '@/lib/types';
 import '@/assets/content.css';
 
 export default defineContentScript({
@@ -22,7 +23,6 @@ export default defineContentScript({
     let debounceTimer: ReturnType<typeof setTimeout> | null = null;
     let currentTargetLang = 'es';
 
-    // Auto-detect page language from <html lang="..."> tag if available
     function detectDocLang(): string {
       const htmlLang = document.documentElement.lang || document.body?.getAttribute('lang');
       if (htmlLang && htmlLang.length >= 2) {
@@ -32,7 +32,7 @@ export default defineContentScript({
     }
 
     async function translatePage(targetLang?: string) {
-      const settingsResp = await browser.runtime.sendMessage({ type: 'GET_SETTINGS' });
+      const settingsResp: MessageResponse = await browser.runtime.sendMessage({ type: 'GET_SETTINGS' });
       const settings = settingsResp?.data || {};
 
       const sourceLang = detectDocLang();
@@ -47,7 +47,7 @@ export default defineContentScript({
 
       const texts = nodeInfos.map((n) => n.originalText);
       try {
-        const response = await browser.runtime.sendMessage({
+        const response: MessageResponse = await browser.runtime.sendMessage({
           type: 'TRANSLATE_BATCH',
           texts,
           source: sourceLang,
@@ -125,7 +125,7 @@ export default defineContentScript({
       const texts = newInfos.map((n) => n.originalText);
 
       try {
-        const response = await browser.runtime.sendMessage({
+        const response: MessageResponse = await browser.runtime.sendMessage({
           type: 'TRANSLATE_BATCH',
           texts,
           source: sourceLang,
@@ -143,7 +143,7 @@ export default defineContentScript({
     }
 
     // Check auto-translate preference on page load
-    browser.runtime.sendMessage({ type: 'GET_SETTINGS' }).then((res) => {
+    browser.runtime.sendMessage({ type: 'GET_SETTINGS' }).then((res: any) => {
       const settings = res?.data;
       if (!settings) return;
 
@@ -158,7 +158,7 @@ export default defineContentScript({
     });
 
     // Listen for messages from Popup / Context Menu / Commands
-    browser.runtime.onMessage.addListener((message) => {
+    browser.runtime.onMessage.addListener((message: any): Promise<any> | void => {
       if (message.type === 'TOGGLE_TRANSLATION') {
         if (isTranslated) {
           revertPage();
@@ -180,7 +180,7 @@ export default defineContentScript({
           const range = selection.getRangeAt(0);
           const rect = range.getBoundingClientRect();
           showSelectionPopover(selectedText, rect, async (text) => {
-            const resp = await browser.runtime.sendMessage({
+            const resp: MessageResponse = await browser.runtime.sendMessage({
               type: 'TRANSLATE_BATCH',
               texts: [text],
               source: detectDocLang(),
@@ -189,6 +189,7 @@ export default defineContentScript({
             return { translatedText: resp?.data?.[0] || text };
           });
         }
+        return Promise.resolve({ success: true });
       }
     });
   },
