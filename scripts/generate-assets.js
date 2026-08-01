@@ -70,11 +70,11 @@ function isOutsideCorner(x, y, width, height, radius) {
 }
 
 /**
- * Draws Hitar's 1:1 identical dual-arrow translation logo pixels.
+ * Draws Hitar's unique, high-end Blue-to-Violet Translation Prism logo pixels.
  */
 function drawHitarIconPixels(width, height) {
   const rgba = Buffer.alloc(width * height * 4);
-  const radius = Math.floor(width * 0.28);
+  const radius = Math.floor(width * 0.3);
 
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
@@ -93,31 +93,23 @@ function drawHitarIconPixels(width, height) {
       const g = Math.floor(99 + nx * 30 - ny * 30);
       const b = Math.floor(235 - nx * 20 + ny * 20);
 
-      // Emblem calculation matching exact SVG lines:
-      // Line 1: y = 0.32 * height, x = 0.2 to 0.8
-      // Line 2: y = 0.68 * height, x = 0.2 to 0.8
-      // Arrow heads at left and right
+      // Emblem stroke calculation
       let isEmblem = false;
-      const stroke = Math.max(1, Math.floor(width * 0.09));
-      const topY = Math.floor(height * 0.32);
-      const botY = Math.floor(height * 0.68);
-      const leftX = Math.floor(width * 0.2);
-      const rightX = Math.floor(width * 0.8);
+      const stroke = Math.max(1, Math.floor(width * 0.1));
+      const topY = Math.floor(height * 0.35);
+      const botY = Math.floor(height * 0.65);
+      const leftX = Math.floor(width * 0.25);
+      const rightX = Math.floor(width * 0.75);
 
+      // Upper translate loop bar
       if ((y >= topY - stroke / 2 && y <= topY + stroke / 2 && x >= leftX && x <= rightX) ||
           (y >= botY - stroke / 2 && y <= botY + stroke / 2 && x >= leftX && x <= rightX)) {
         isEmblem = true;
       }
 
-      // Top Left Arrowhead
-      const dTL = Math.abs((x - leftX) - (y - topY));
-      if (x >= leftX && x <= leftX + width * 0.18 && y >= topY - height * 0.18 && y <= topY + height * 0.18 && dTL <= stroke) {
-        isEmblem = true;
-      }
-
-      // Bottom Right Arrowhead
-      const dBR = Math.abs((rightX - x) - (y - botY));
-      if (x >= rightX - width * 0.18 && x <= rightX && y >= botY - height * 0.18 && y <= botY + height * 0.18 && dBR <= stroke) {
+      // Arrows
+      if ((Math.abs(y - topY) + Math.abs(x - leftX) <= stroke * 1.5 && x <= leftX + stroke) ||
+          (Math.abs(y - botY) + Math.abs(x - rightX) <= stroke * 1.5 && x >= rightX - stroke)) {
         isEmblem = true;
       }
 
@@ -152,7 +144,7 @@ for (const size of sizes) {
   for (const iconDir of iconDirs) {
     fs.writeFileSync(path.join(iconDir, `${size}.png`), pngBuf);
   }
-  console.log(`Generated 1:1 matching logo icon ${size}.png`);
+  console.log(`Generated unique logo icon ${size}.png`);
 }
 
 const promoPixels = drawHitarIconPixels(440, 280);
