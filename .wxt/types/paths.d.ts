@@ -4,8 +4,13 @@ import "wxt/browser";
 declare module "wxt/browser" {
   export type PublicPath =
     | "/"
+    | "/_locales/en/messages.json"
     | "/background.js"
     | "/content-scripts/content.js"
+    | "/icon/128.png"
+    | "/icon/16.png"
+    | "/icon/32.png"
+    | "/icon/48.png"
     | "/options.html"
     | "/popup.html"
   type HtmlPublicPath = Extract<PublicPath, `${string}.html`>

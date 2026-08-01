@@ -2,17 +2,14 @@ import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
 
-/**
- * Encodes raw RGBA buffer into a valid PNG buffer.
- */
 function createPngBuffer(width, height, rgbaBuffer) {
   const signature = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
 
   const ihdr = Buffer.alloc(13);
   ihdr.writeUInt32BE(width, 0);
   ihdr.writeUInt32BE(height, 4);
-  ihdr.writeUInt8(8, 8); // 8-bit depth
-  ihdr.writeUInt8(6, 9); // Truecolor RGBA
+  ihdr.writeUInt8(8, 8);
+  ihdr.writeUInt8(6, 9);
   ihdr.writeUInt8(0, 10);
   ihdr.writeUInt8(0, 11);
   ihdr.writeUInt8(0, 12);
@@ -100,17 +97,21 @@ function drawHitarIconPixels(width, height) {
   return rgba;
 }
 
-const iconDir = path.resolve('public/icon');
-if (!fs.existsSync(iconDir)) {
-  fs.mkdirSync(iconDir, { recursive: true });
+const iconDirs = [path.resolve('public/icon'), path.resolve('src/public/icon')];
+for (const iconDir of iconDirs) {
+  if (!fs.existsSync(iconDir)) {
+    fs.mkdirSync(iconDir, { recursive: true });
+  }
 }
 
 const sizes = [16, 32, 48, 128];
 for (const size of sizes) {
   const pixels = drawHitarIconPixels(size, size);
   const pngBuf = createPngBuffer(size, size, pixels);
-  fs.writeFileSync(path.join(iconDir, `${size}.png`), pngBuf);
-  console.log(`Generated public/icon/${size}.png`);
+  for (const iconDir of iconDirs) {
+    fs.writeFileSync(path.join(iconDir, `${size}.png`), pngBuf);
+  }
+  console.log(`Generated icon ${size}.png`);
 }
 
 const promoPixels = drawHitarIconPixels(440, 280);

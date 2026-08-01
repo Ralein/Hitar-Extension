@@ -72,8 +72,88 @@ declare module "wxt/browser" {
       substitutions?: string | string[],
       options?: GetMessageOptions,
     ): string;
+    /**
+     * Extension name
+     *
+     * "Hitar — Live Page Translator"
+     */
     getMessage(
-      messageName: "@@extension_id" | "@@ui_locale" | "@@bidi_dir" | "@@bidi_reversed_dir" | "@@bidi_start_edge" | "@@bidi_end_edge",
+      messageName: "extName",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * Extension description
+     *
+     * "Translates visible webpage text in place using a free, self-hostable LibreTranslate engine."
+     */
+    getMessage(
+      messageName: "extDescription",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * Title in popup
+     *
+     * "Hitar Page Translator"
+     */
+    getMessage(
+      messageName: "popupTitle",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * Button to translate current page
+     *
+     * "Translate Page"
+     */
+    getMessage(
+      messageName: "translatePage",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * Button to revert translation
+     *
+     * "Show Original"
+     */
+    getMessage(
+      messageName: "showOriginal",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * Option to auto-translate domain
+     *
+     * "Always translate this site"
+     */
+    getMessage(
+      messageName: "alwaysTranslate",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * Option to skip domain
+     *
+     * "Never translate this site"
+     */
+    getMessage(
+      messageName: "neverTranslate",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * Link to options page
+     *
+     * "Options"
+     */
+    getMessage(
+      messageName: "options",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    getMessage(
+      messageName: "@@extension_id" | "@@ui_locale" | "@@bidi_dir" | "@@bidi_reversed_dir" | "@@bidi_start_edge" | "@@bidi_end_edge" | "extName" | "extDescription" | "popupTitle" | "translatePage" | "showOriginal" | "alwaysTranslate" | "neverTranslate" | "options",
       substitutions?: string | string[],
       options?: GetMessageOptions,
     ): string;
