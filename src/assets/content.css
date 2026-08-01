@@ -149,13 +149,13 @@
 }
 
 .hitar-error-text {
-  color: #b91c1c;
+  color: #991b1b;
   font-size: 12px;
 }
 
 @media (prefers-color-scheme: dark) {
   .hitar-error-text {
-    color: #fca5a5;
+    color: #fee2e2;
   }
 }
 
