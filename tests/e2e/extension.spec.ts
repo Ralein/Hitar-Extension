@@ -1,4 +1,4 @@
-import { test as base, chromium, type BrowserContext } from '@playwright/test';
+import { test as base, chromium, expect, type BrowserContext } from '@playwright/test';
 import path from 'path';
 import fs from 'fs';
 
@@ -8,7 +8,7 @@ export const test = base.extend<{
   context: BrowserContext;
   extensionId: string;
 }>({
-  context: async ({}, use) => {
+  context: async ({}, use: (r: BrowserContext) => Promise<void>) => {
     const pathToExtension = extensionPath;
     const context = await chromium.launchPersistentContext('', {
       headless: false,
@@ -20,7 +20,7 @@ export const test = base.extend<{
     await use(context);
     await context.close();
   },
-  extensionId: async ({ context }, use) => {
+  extensionId: async ({ context }: { context: BrowserContext }, use: (r: string) => Promise<void>) => {
     let [background] = context.serviceWorkers();
     if (!background) {
       background = await context.waitForEvent('serviceworker');
@@ -30,10 +30,8 @@ export const test = base.extend<{
   },
 });
 
-export { expect } from '@playwright/test';
-
 test.describe('Hitar Extension E2E Test Suite', () => {
-  test('loads unpacked extension and options page successfully', async ({ page, extensionId }) => {
+  test('loads unpacked extension and options page successfully', async ({ page, extensionId }: { page: any; extensionId: string }) => {
     const optionsUrl = `chrome-extension://${extensionId}/options.html`;
     await page.goto(optionsUrl);
 
@@ -42,8 +40,7 @@ test.describe('Hitar Extension E2E Test Suite', () => {
     await expect(page.locator('#clear-cache-btn')).toBeVisible();
   });
 
-  test('injects content script into test fixture page', async ({ page }) => {
-    // Create temporary HTML fixture file
+  test('injects content script into test fixture page', async ({ page }: { page: any }) => {
     const fixturePath = path.resolve('tests/e2e/fixture.html');
     fs.writeFileSync(
       fixturePath,
@@ -61,7 +58,6 @@ test.describe('Hitar Extension E2E Test Suite', () => {
     const heading = page.locator('#heading');
     await expect(heading).toHaveText('Welcome to the Hitar Test Page');
 
-    // Clean up test file after test
     if (fs.existsSync(fixturePath)) {
       fs.unlinkSync(fixturePath);
     }

@@ -24,6 +24,7 @@
     "webextension-polyfill": "^0.12.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
     "@types/node": "^22.10.10",
     "@types/webextension-polyfill": "^0.12.0",
     "@typescript-eslint/eslint-plugin": "^8.21.0",
