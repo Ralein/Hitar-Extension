@@ -175,9 +175,14 @@ export class TranslationCache {
   async clear(): Promise<void> {
     try {
       const db = await this.getDB();
-      const tx = db.transaction(STORE_NAME, 'readwrite');
-      const store = tx.objectStore(STORE_NAME);
-      store.clear();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        const store = tx.objectStore(STORE_NAME);
+        const req = store.clear();
+
+        req.onsuccess = () => resolve();
+        req.onerror = () => reject(req.error);
+      });
     } catch {
       // Ignore clear errors
     }

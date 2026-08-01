@@ -69,9 +69,12 @@ function isOutsideCorner(x, y, width, height, radius) {
   return false;
 }
 
+/**
+ * Draws Hitar's vibrant new Violet-Indigo-Cyan logo pixels.
+ */
 function drawHitarIconPixels(width, height) {
   const rgba = Buffer.alloc(width * height * 4);
-  const radius = Math.floor(width * 0.25);
+  const radius = Math.floor(width * 0.28);
 
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
@@ -82,15 +85,38 @@ function drawHitarIconPixels(width, height) {
         continue;
       }
 
+      const nx = x / width;
       const ny = y / height;
-      const r = Math.floor(12 - ny * 10);
-      const g = Math.floor(147 - ny * 30);
-      const b = Math.floor(231 - ny * 34);
 
-      rgba[offset] = Math.max(0, Math.min(255, r));
-      rgba[offset + 1] = Math.max(0, Math.min(255, g));
-      rgba[offset + 2] = Math.max(0, Math.min(255, b));
-      rgba[offset + 3] = 255;
+      // Rich multi-color gradient: Violet (#7c3aed) -> Indigo (#4f46e5) -> Cyan (#06b6d4)
+      const r = Math.floor(124 - nx * 80 + ny * 10);
+      const g = Math.floor(58 + nx * 120 - ny * 20);
+      const b = Math.floor(237 - ny * 30);
+
+      // Draw distinctive white "H" emblem & arrows
+      let isEmblem = false;
+      const stroke = Math.max(1, Math.floor(width * 0.1));
+      const leftCol = Math.floor(width * 0.25);
+      const rightCol = Math.floor(width * 0.65);
+      const midRow = Math.floor(height * 0.48);
+
+      if ((x >= leftCol && x < leftCol + stroke && y >= height * 0.22 && y <= height * 0.78) ||
+          (x >= rightCol && x < rightCol + stroke && y >= height * 0.22 && y <= height * 0.78) ||
+          (y >= midRow - stroke / 2 && y <= midRow + stroke / 2 && x >= leftCol && x <= rightCol + stroke)) {
+        isEmblem = true;
+      }
+
+      if (isEmblem) {
+        rgba[offset] = 255;
+        rgba[offset + 1] = 255;
+        rgba[offset + 2] = 255;
+        rgba[offset + 3] = 255;
+      } else {
+        rgba[offset] = Math.max(0, Math.min(255, r));
+        rgba[offset + 1] = Math.max(0, Math.min(255, g));
+        rgba[offset + 2] = Math.max(0, Math.min(255, b));
+        rgba[offset + 3] = 255;
+      }
     }
   }
 
@@ -111,7 +137,7 @@ for (const size of sizes) {
   for (const iconDir of iconDirs) {
     fs.writeFileSync(path.join(iconDir, `${size}.png`), pngBuf);
   }
-  console.log(`Generated icon ${size}.png`);
+  console.log(`Generated logo icon ${size}.png`);
 }
 
 const promoPixels = drawHitarIconPixels(440, 280);

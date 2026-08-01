@@ -26,9 +26,9 @@ export function showSelectionPopover(
     <div class="hitar-card">
       <div class="hitar-card-header">
         <div class="hitar-title">
-          <svg class="hitar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m5 8 6 6 6-6"/>
-            <path d="m4 14 6 6 6-6"/>
+          <svg class="hitar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 4v16M17 4v16M7 12h10"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 9l3 3-3 3"/>
           </svg>
           <span>Hitar Translation</span>
         </div>
