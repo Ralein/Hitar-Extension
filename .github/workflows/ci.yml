@@ -1,0 +1,50 @@
+name: Hitar CI / CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Type Check & Lint
+        run: |
+          npm run compile
+          npm run lint
+
+      - name: Unit Tests
+        run: npm run test
+
+      - name: Build Target Extension Packages (Chrome, Firefox, Edge)
+        run: npm run build:all
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright E2E Tests
+        run: npx playwright test
+
+      - name: Upload Extension Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: hitar-extension-builds
+          path: |
+            .output/chrome-mv3
+            .output/firefox-mv3
+            .output/edge-mv3

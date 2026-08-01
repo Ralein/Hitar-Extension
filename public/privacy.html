@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hitar — Privacy Policy</title>
+    <style>
+      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.6; color: #1e293b; }
+      h1 { color: #0284c7; }
+      code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+    </style>
+  </head>
+  <body>
+    <h1>Hitar Privacy Policy</h1>
+    <p><strong>Effective Date:</strong> August 2, 2026</p>
+
+    <h2>1. Overview</h2>
+    <p>Hitar is an open-source, cross-browser extension designed to translate web content in place using self-hostable LibreTranslate backends.</p>
+
+    <h2>2. Data Handling</h2>
+    <p>Hitar collects <strong>zero PII, zero telemetry, and zero browsing history</strong>. Webpage text extracted for translation is sent directly to your configured LibreTranslate endpoint.</p>
+
+    <h2>3. Local Storage & Caching</h2>
+    <p>Translations are stored locally in your browser's <code>IndexedDB</code> and <code>storage.local</code>. No data is sent to central extension servers.</p>
+
+    <h2>4. Self-Hosting</h2>
+    <p>Run your own private backend with Docker: <code>docker run -p 5000:5000 libretranslate/libretranslate</code> so text never leaves your local machine.</p>
+  </body>
+</html>
