@@ -139,9 +139,18 @@ export class TranslatorClient {
     const baseUrl = endpoint.url.replace(/\/$/, '');
     const url = `${baseUrl}/translate`;
 
+    // LibreTranslate requires a valid 2-letter source language code (e.g., 'en').
+    // If source is 'auto', detect language from first snippet or fallback to 'en'.
+    let resolvedSource = source;
+    if (!resolvedSource || resolvedSource === 'auto') {
+      const sampleText = texts.find((t) => t && t.trim().length > 3) || texts[0] || '';
+      const detected = await this.detectLanguage(sampleText);
+      resolvedSource = detected || 'en';
+    }
+
     const payload: TranslationRequest = {
       q: texts,
-      source: source || 'auto',
+      source: resolvedSource,
       target,
       format: 'text',
     };
@@ -157,14 +166,23 @@ export class TranslatorClient {
     });
 
     if (!response.ok) {
-      const errorObj: any = new Error(`HTTP Error ${response.status}: ${response.statusText}`);
+      let errMessage = `HTTP Error ${response.status}: ${response.statusText}`;
+      try {
+        const errJson = await response.json();
+        if (errJson?.error) {
+          errMessage = `HTTP Error ${response.status}: ${errJson.error}`;
+        }
+      } catch {
+        // Ignore json parse error on non-json error page
+      }
+
+      const errorObj: any = new Error(errMessage);
       errorObj.status = response.status;
       throw errorObj;
     }
 
     const data = await response.json();
 
-    // LibreTranslate returns translatedText as string[] if q was string[], or string if single string
     if (Array.isArray(data.translatedText)) {
       return data.translatedText;
     } else if (typeof data.translatedText === 'string') {
