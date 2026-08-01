@@ -1,6 +1,7 @@
 import browser from 'webextension-polyfill';
 import { ExtensionSettings, MessageResponse } from '@/lib/types';
 import { setSiteRule } from '@/lib/storage';
+import { SUPPORTED_LANGUAGES } from '@/lib/languages';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const currentHostEl = document.getElementById('current-host') as HTMLElement;
@@ -18,6 +19,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   let activeTab: browser.Tabs.Tab | null = null;
   let currentHost = '';
   let isTranslatedState = false;
+
+  // Populate target languages dynamically
+  targetLangSelect.innerHTML = '';
+  SUPPORTED_LANGUAGES.forEach((lang) => {
+    const opt = document.createElement('option');
+    opt.value = lang.code;
+    opt.textContent = `${lang.name} (${lang.nativeName})`;
+    targetLangSelect.appendChild(opt);
+  });
 
   const tabs = await browser.tabs.query({ active: true, currentWindow: true });
   activeTab = tabs[0] || null;
@@ -69,7 +79,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   const siteTarget = currentHost ? settings.perSiteTargetLangs?.[currentHost] : null;
-  targetLangSelect.value = siteTarget || settings.defaultTargetLang || 'es';
+  targetLangSelect.value = siteTarget || settings.defaultTargetLang || 'id';
 
   targetLangSelect.addEventListener('change', async () => {
     const selectedLang = targetLangSelect.value;
