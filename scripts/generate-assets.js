@@ -70,11 +70,12 @@ function isOutsideCorner(x, y, width, height, radius) {
 }
 
 /**
- * Draws Hitar's unique, high-end Blue-to-Violet Translation Prism logo pixels.
+ * Draws Hitar's signature Blue-Indigo-Cyan emblem icon.
+ * Matches SVG path: Top arrow right (x: 25% -> 75%, y: 35%), Bottom arrow left (x: 25% -> 75%, y: 65%).
  */
 function drawHitarIconPixels(width, height) {
   const rgba = Buffer.alloc(width * height * 4);
-  const radius = Math.floor(width * 0.3);
+  const radius = Math.floor(width * 0.28);
 
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
@@ -88,28 +89,35 @@ function drawHitarIconPixels(width, height) {
       const nx = x / width;
       const ny = y / height;
 
-      // Unique Brand Gradient: Electric Blue (#2563eb) -> Indigo (#6366f1) -> Purple (#9333ea)
-      const r = Math.floor(37 + nx * 60 + ny * 50);
-      const g = Math.floor(99 + nx * 30 - ny * 30);
-      const b = Math.floor(235 - nx * 20 + ny * 20);
+      // Premium Electric Cobalt (#2563eb) -> Indigo (#4f46e5) -> Cyan (#06b6d4)
+      const r = Math.floor(37 + nx * 40 - ny * 10);
+      const g = Math.floor(99 + nx * 80 + ny * 20);
+      const b = Math.floor(235 - ny * 20);
 
-      // Emblem stroke calculation
       let isEmblem = false;
-      const stroke = Math.max(1, Math.floor(width * 0.1));
-      const topY = Math.floor(height * 0.35);
-      const botY = Math.floor(height * 0.65);
-      const leftX = Math.floor(width * 0.25);
-      const rightX = Math.floor(width * 0.75);
+      const stroke = Math.max(1, Math.floor(width * 0.09));
 
-      // Upper translate loop bar
-      if ((y >= topY - stroke / 2 && y <= topY + stroke / 2 && x >= leftX && x <= rightX) ||
-          (y >= botY - stroke / 2 && y <= botY + stroke / 2 && x >= leftX && x <= rightX)) {
+      const topY = Math.floor(height * 0.36);
+      const botY = Math.floor(height * 0.64);
+      const startX = Math.floor(width * 0.25);
+      const endX = Math.floor(width * 0.75);
+
+      // Top line rightward
+      if (y >= topY - stroke / 2 && y <= topY + stroke / 2 && x >= startX && x <= endX) {
+        isEmblem = true;
+      }
+      // Top arrowhead right
+      const headSize = Math.floor(width * 0.16);
+      if (x >= endX - headSize && x <= endX && Math.abs((y - topY) + (x - endX)) <= stroke * 1.2) {
         isEmblem = true;
       }
 
-      // Arrows
-      if ((Math.abs(y - topY) + Math.abs(x - leftX) <= stroke * 1.5 && x <= leftX + stroke) ||
-          (Math.abs(y - botY) + Math.abs(x - rightX) <= stroke * 1.5 && x >= rightX - stroke)) {
+      // Bottom line leftward
+      if (y >= botY - stroke / 2 && y <= botY + stroke / 2 && x >= startX && x <= endX) {
+        isEmblem = true;
+      }
+      // Bottom arrowhead left
+      if (x >= startX && x <= startX + headSize && Math.abs((y - botY) - (x - startX)) <= stroke * 1.2) {
         isEmblem = true;
       }
 
@@ -144,7 +152,7 @@ for (const size of sizes) {
   for (const iconDir of iconDirs) {
     fs.writeFileSync(path.join(iconDir, `${size}.png`), pngBuf);
   }
-  console.log(`Generated unique logo icon ${size}.png`);
+  console.log(`Generated Hitar signature icon ${size}.png`);
 }
 
 const promoPixels = drawHitarIconPixels(440, 280);
