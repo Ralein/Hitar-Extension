@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const targetLangSelect = document.getElementById('target-lang') as HTMLSelectElement;
   const toggleBtn = document.getElementById('toggle-translate-btn') as HTMLButtonElement;
   const btnLabel = document.getElementById('btn-label') as HTMLElement;
+  const btnIcon = document.getElementById('btn-icon') as HTMLElement;
   const alwaysChk = document.getElementById('always-translate-chk') as HTMLInputElement;
   const neverChk = document.getElementById('never-translate-chk') as HTMLInputElement;
   const openOptionsBtn = document.getElementById('open-options') as HTMLButtonElement;
@@ -138,30 +139,63 @@ document.addEventListener('DOMContentLoaded', async () => {
   toggleBtn.addEventListener('click', async () => {
     if (!activeTab?.id) return;
     const targetLang = targetLangSelect.value;
+    
+    // Show loading state on button
+    toggleBtn.disabled = true;
+    btnLabel.textContent = isTranslatedState ? 'Reverting...' : 'Translating...';
+
     try {
-      const resp: any = await browser.tabs.sendMessage(activeTab.id, {
-        type: 'TOGGLE_TRANSLATION',
-        targetLang,
-      });
+      let resp: any = null;
+      try {
+        resp = await browser.tabs.sendMessage(activeTab.id, {
+          type: 'TOGGLE_TRANSLATION',
+          targetLang,
+        });
+      } catch {
+        // Automatically inject content script into tab if not already present, then retry!
+        await browser.scripting.executeScript({
+          target: { tabId: activeTab.id },
+          files: ['content-scripts/content.js'],
+        });
+        await browser.scripting.insertCSS({
+          target: { tabId: activeTab.id },
+          files: ['content-scripts/content.css'],
+        });
+        await new Promise((resolve) => setTimeout(resolve, 150));
+        resp = await browser.tabs.sendMessage(activeTab.id, {
+          type: 'TOGGLE_TRANSLATION',
+          targetLang,
+        });
+      }
 
       if (resp && typeof resp.isTranslated === 'boolean') {
         isTranslatedState = resp.isTranslated;
-        updateTranslateButtonState();
+      } else {
+        isTranslatedState = !isTranslatedState;
       }
-    } catch {
-      btnLabel.textContent = 'Refresh page to use Hitar';
+    } catch (err: any) {
+      console.error('[Hitar Popup] Toggle failed:', err);
+    } finally {
+      toggleBtn.disabled = false;
+      updateTranslateButtonState();
     }
   });
 
   function updateTranslateButtonState() {
     if (isTranslatedState) {
-      btnLabel.textContent = 'Show Original';
+      btnLabel.textContent = 'Show Original Text';
       toggleBtn.className =
-        'w-full py-2.5 px-4 rounded-lg bg-slate-700 hover:bg-slate-800 active:scale-[0.99] text-white font-semibold text-xs tracking-wide shadow-md transition-all flex items-center justify-center gap-2';
+        'w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-900 active:scale-[0.98] text-white font-semibold text-xs tracking-wide shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer';
+      if (btnIcon) {
+        btnIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>`;
+      }
     } else {
-      btnLabel.textContent = 'Translate Page';
+      btnLabel.textContent = 'Translate Entire Page';
       toggleBtn.className =
-        'w-full py-2.5 px-4 rounded-lg bg-brand-600 hover:bg-brand-700 active:scale-[0.99] text-white font-semibold text-xs tracking-wide shadow-md shadow-brand-500/20 transition-all flex items-center justify-center gap-2';
+        'w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 active:scale-[0.98] text-white font-semibold text-xs tracking-wide shadow-lg shadow-brand-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer';
+      if (btnIcon) {
+        btnIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m3 5 8 8 8-8"/>`;
+      }
     }
   }
 

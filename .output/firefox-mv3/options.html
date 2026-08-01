@@ -4,53 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hitar Settings & Preferences</title>
-    <script type="module" crossorigin src="/chunks/options-B2c2c9rj.js"></script>
-    <link rel="modulepreload" crossorigin href="/chunks/translator-client-CF0x6J36.js">
-    <link rel="stylesheet" crossorigin href="/assets/translator-client-JOAZR2fR.css">
+    <script type="module" crossorigin src="/chunks/options-CKeUb6pX.js"></script>
+    <link rel="modulepreload" crossorigin href="/chunks/translator-client-BQ3mpCAi.js">
+    <link rel="stylesheet" crossorigin href="/assets/translator-client-C55csnUy.css">
   </head>
   <body class="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
     <div class="max-w-4xl mx-auto px-4 py-8 flex flex-col gap-6">
       
       <!-- Top Header -->
       <header class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-brand-400 flex items-center justify-center text-white shadow-lg shadow-brand-500/20">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <div class="flex items-center gap-3.5">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-600 via-brand-500 to-cyan-400 flex items-center justify-center text-white shadow-xl shadow-brand-500/25 ring-2 ring-white/20">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
               <path stroke-linecap="round" stroke-linejoin="round" d="m5 8 6 6 6-6" />
               <path stroke-linecap="round" stroke-linejoin="round" d="m4 14 6 6 6-6" />
             </svg>
           </div>
           <div>
-            <h1 class="text-xl font-bold tracking-tight">Hitar Settings</h1>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Configure translation backends, caching, site rules, and privacy preferences.</p>
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl font-bold tracking-tight">Hitar Dashboard</h1>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 uppercase tracking-wider border border-emerald-500/20">100% Free &amp; Open</span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Configure multi-engine backends, zero-paid API rules, domain preferences, and cache tuning.</p>
           </div>
         </div>
 
-        <button id="save-status-badge" class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 opacity-0 transition-opacity">
-          Saved!
+        <button id="save-status-badge" class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 opacity-0 transition-opacity flex items-center gap-1.5 shadow-sm border border-emerald-500/30">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+          Settings Saved!
         </button>
       </header>
 
-      <!-- Self-Hosting Callout Banner -->
-      <div class="p-4 rounded-xl bg-gradient-to-r from-brand-900/90 to-slate-900 text-white shadow-md border border-brand-700/50 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
+      <!-- Free Tier Engine Banner -->
+      <div class="p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-brand-950 to-slate-900 text-white shadow-xl border border-brand-500/30 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
         <div class="flex flex-col gap-1">
-          <div class="flex items-center gap-2 font-semibold text-sm text-brand-300">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L5.6 15.12a2 2 0 01-1.077-.636l-1.03-1.03a2 2 0 010-2.83l.547-.547a6 6 0 00.517-3.86l-.158-.318a6 6 0 01.517-3.86L6.5 1.7a2 2 0 012.83 0l.547.547a6 6 0 003.86.517l.318-.158a6 6 0 013.86.517l2.387.477a2 2 0 011.022.547l1.03 1.03a2 2 0 010 2.83l-.547.547a6 6 0 00-.517 3.86l.158.318a6 6 0 01-.517 3.86l-.477 2.387a2 2 0 01-.547 1.022l-1.03 1.03z" /></svg>
-            Recommended for Production: Docker Self-Hosting
+          <div class="flex items-center gap-2 font-bold text-sm text-cyan-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            Zero Paid API Keys Required
           </div>
-          <p class="text-xs text-slate-300">Public instances are rate-limited. Run your own private, key-less LibreTranslate instance locally or on your server in 1 second:</p>
-          <code class="text-xs bg-black/40 px-2.5 py-1 rounded border border-white/10 font-mono text-emerald-400 mt-1 select-all">docker run -p 5000:5000 libretranslate/libretranslate</code>
+          <p class="text-xs text-slate-300">Hitar uses built-in free web translation engines (Google Free Engine, Lingva, LibreTranslate). Optional local Docker self-hosting guide:</p>
+          <code class="text-xs bg-black/60 px-3 py-1.5 rounded-xl border border-white/10 font-mono text-emerald-400 mt-1 select-all">docker run -p 5000:5000 libretranslate/libretranslate</code>
         </div>
       </div>
 
       <!-- Section 1: Translation Endpoints -->
-      <section class="glass-card p-5 flex flex-col gap-4">
+      <section class="glass-card p-5 flex flex-col gap-4 shadow-sm">
         <div class="flex items-center justify-between">
           <div>
-            <h2 class="text-base font-semibold">Translation Endpoints &amp; Failover</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Endpoints are tried in order. If the primary rate-limits, Hitar automatically falls back to the next.</p>
+            <h2 class="text-base font-bold">Free Translation Engines &amp; Priority</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Endpoints are queried in priority order. If one fails or rate-limits, Hitar automatically fails over to the next engine seamlessly.</p>
           </div>
-          <button id="add-endpoint-btn" class="px-3 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold transition-all">
+          <button id="add-endpoint-btn" class="px-3.5 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 active:scale-[0.98] text-white text-xs font-bold transition-all shadow-md shadow-brand-500/20 cursor-pointer">
             + Add Endpoint
           </button>
         </div>
@@ -63,71 +67,71 @@
       <!-- Section 2: Site Rules -->
       <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Always Translate -->
-        <div class="glass-card p-5 flex flex-col gap-3">
-          <h2 class="text-sm font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+        <div class="glass-card p-5 flex flex-col gap-3 shadow-sm">
+          <h2 class="text-sm font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
             Always Translate Domains
           </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Pages on these domains automatically translate upon load.</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Pages on these domains automatically translate upon load.</p>
           <div class="flex gap-2">
-            <input type="text" id="add-always-domain-input" aria-label="Always translate domain name" placeholder="example.com" class="flex-1 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
-            <button id="add-always-domain-btn" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-medium rounded-lg">Add</button>
+            <input type="text" id="add-always-domain-input" aria-label="Always translate domain name" placeholder="example.com" class="flex-1 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all">
+            <button id="add-always-domain-btn" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-bold rounded-xl transition-all cursor-pointer">Add</button>
           </div>
-          <ul id="always-domains-list" class="flex flex-col gap-1 max-h-36 overflow-y-auto text-xs">
+          <ul id="always-domains-list" class="flex flex-col gap-1.5 max-h-36 overflow-y-auto text-xs">
             <!-- Dynamically populated -->
           </ul>
         </div>
 
         <!-- Never Translate -->
-        <div class="glass-card p-5 flex flex-col gap-3">
-          <h2 class="text-sm font-semibold text-rose-600 dark:text-rose-400 flex items-center gap-1.5">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        <div class="glass-card p-5 flex flex-col gap-3 shadow-sm">
+          <h2 class="text-sm font-bold text-rose-600 dark:text-rose-400 flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
             Never Translate Domains
           </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Translation is disabled on these domains.</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Translation is disabled on these domains.</p>
           <div class="flex gap-2">
-            <input type="text" id="add-never-domain-input" aria-label="Never translate domain name" placeholder="internal.work" class="flex-1 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
-            <button id="add-never-domain-btn" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-medium rounded-lg">Add</button>
+            <input type="text" id="add-never-domain-input" aria-label="Never translate domain name" placeholder="internal.work" class="flex-1 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all">
+            <button id="add-never-domain-btn" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-bold rounded-xl transition-all cursor-pointer">Add</button>
           </div>
-          <ul id="never-domains-list" class="flex flex-col gap-1 max-h-36 overflow-y-auto text-xs">
+          <ul id="never-domains-list" class="flex flex-col gap-1.5 max-h-36 overflow-y-auto text-xs">
             <!-- Dynamically populated -->
           </ul>
         </div>
       </section>
 
       <!-- Section 3: Cache & Tuning -->
-      <section class="glass-card p-5 flex flex-col gap-4">
-        <h2 class="text-base font-semibold">Cache &amp; Batch Tuning</h2>
+      <section class="glass-card p-5 flex flex-col gap-4 shadow-sm">
+        <h2 class="text-base font-bold">Cache &amp; Batch Tuning</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Cache Stats -->
-          <div class="flex flex-col justify-between p-4 rounded-lg bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800">
+          <div class="flex flex-col justify-between p-4 rounded-xl bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800">
             <div>
-              <div class="text-xs font-medium text-slate-500">IndexedDB Translation Cache</div>
-              <div id="cache-count" class="text-2xl font-bold text-slate-800 dark:text-slate-100 mt-1">0 / 20,000 entries</div>
-              <p class="text-[11px] text-slate-400 mt-1">LRU eviction automatically purges oldest entries when capacity is reached.</p>
+              <div class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">IndexedDB Cache</div>
+              <div id="cache-count" class="text-2xl font-extrabold text-slate-800 dark:text-slate-100 mt-1">0 / 20,000 entries</div>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 font-medium">LRU eviction automatically purges oldest entries when capacity is reached.</p>
             </div>
-            <button id="clear-cache-btn" class="mt-4 w-full py-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-lg transition-colors">
+            <button id="clear-cache-btn" class="mt-4 w-full py-2 bg-rose-600 hover:bg-rose-700 active:scale-[0.98] text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-rose-600/20 cursor-pointer">
               Clear Translation Cache
             </button>
           </div>
 
           <!-- Batch tuning -->
           <div class="flex flex-col gap-3">
-            <div class="flex flex-col gap-1">
-              <div class="flex justify-between text-xs font-medium">
+            <div class="flex flex-col gap-1.5">
+              <div class="flex justify-between text-xs font-semibold">
                 <label for="budget-slider" class="cursor-pointer">Batch Character Budget</label>
-                <span id="budget-value" class="text-brand-600 font-bold">2000 chars</span>
+                <span id="budget-value" class="text-brand-600 dark:text-brand-400 font-extrabold">2000 chars</span>
               </div>
               <input type="range" id="budget-slider" aria-label="Batch character budget slider" min="500" max="5000" step="250" value="2000" class="w-full accent-brand-600 cursor-pointer">
-              <p class="text-[11px] text-slate-400">Controls maximum characters sent per translation HTTP request.</p>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Controls maximum characters sent per translation HTTP request.</p>
             </div>
 
             <div class="h-px bg-slate-200 dark:bg-slate-800 my-1"></div>
 
-            <label class="flex items-center justify-between text-xs font-medium cursor-pointer">
+            <label class="flex items-center justify-between text-xs font-semibold cursor-pointer">
               <span>Auto-translate all sites on load</span>
-              <input type="checkbox" id="auto-translate-load-chk" class="w-4 h-4 rounded text-brand-600 focus:ring-brand-500">
+              <input type="checkbox" id="auto-translate-load-chk" class="w-4 h-4 rounded text-brand-600 focus:ring-brand-500 cursor-pointer">
             </label>
           </div>
         </div>

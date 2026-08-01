@@ -9,19 +9,20 @@ import { MessageType, MessageResponse } from '@/lib/types';
 export default defineBackground(() => {
   console.log('[Hitar Background] Service worker initialized.');
 
-  // Initialize context menu on startup/install
-  browser.runtime.onInstalled.addListener(() => {
+  // Initialize context menu & auto-inject content script into existing tabs on install/update
+  browser.runtime.onInstalled.addListener(async () => {
     setupContextMenu();
+    await autoInjectExistingTabs();
   });
 
   setupContextMenu();
 
-  // Listen for extension shortcut commands (Alt+Shift+T)
+  // Listen for extension shortcut commands (Alt+Shift+T / Cmd+Shift+T)
   browser.commands.onCommand.addListener(async (command) => {
     if (command === 'translate-page') {
       const tabs = await browser.tabs.query({ active: true, currentWindow: true });
       if (tabs[0]?.id) {
-        browser.tabs.sendMessage(tabs[0].id, { type: 'TOGGLE_TRANSLATION' });
+        await sendMessageToTabOrInject(tabs[0].id, { type: 'TOGGLE_TRANSLATION' });
       }
     }
   });
@@ -30,9 +31,9 @@ export default defineBackground(() => {
   browser.contextMenus.onClicked.addListener(async (info, tab) => {
     if (!tab?.id) return;
     if (info.menuItemId === 'hitar_translate_page') {
-      browser.tabs.sendMessage(tab.id, { type: 'TOGGLE_TRANSLATION' });
+      await sendMessageToTabOrInject(tab.id, { type: 'TOGGLE_TRANSLATION' });
     } else if (info.menuItemId === 'hitar_translate_selection' && info.selectionText) {
-      browser.tabs.sendMessage(tab.id, {
+      await sendMessageToTabOrInject(tab.id, {
         type: 'TRANSLATE_SELECTION_TRIGGER',
         selectionText: info.selectionText,
       });
@@ -46,6 +47,61 @@ export default defineBackground(() => {
     },
   );
 });
+
+/**
+ * Automatically injects content script and styles into all active web pages upon install/update
+ * so the extension works immediately without requiring the user to refresh their pages!
+ */
+async function autoInjectExistingTabs() {
+  try {
+    const tabs = await browser.tabs.query({ url: ['http://*/*', 'https://*/*'] });
+    for (const tab of tabs) {
+      if (tab.id) {
+        try {
+          await browser.scripting.executeScript({
+            target: { tabId: tab.id },
+            files: ['content-scripts/content.js'],
+          });
+          await browser.scripting.insertCSS({
+            target: { tabId: tab.id },
+            files: ['content-scripts/content.css'],
+          });
+        } catch {
+          // Ignore restricted tabs (chrome://, etc.)
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('[Hitar Background] Tab auto-injection error:', err);
+  }
+}
+
+/**
+ * Sends a message to a tab, automatically injecting the content script if not yet present.
+ */
+async function sendMessageToTabOrInject(tabId: number, message: any): Promise<any> {
+  try {
+    return await browser.tabs.sendMessage(tabId, message);
+  } catch {
+    // Content script not loaded in tab yet; inject dynamically and retry
+    try {
+      await browser.scripting.executeScript({
+        target: { tabId },
+        files: ['content-scripts/content.js'],
+      });
+      await browser.scripting.insertCSS({
+        target: { tabId },
+        files: ['content-scripts/content.css'],
+      });
+      // Small delay for script initialization
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      return await browser.tabs.sendMessage(tabId, message);
+    } catch (err) {
+      console.error('[Hitar Background] Dynamic injection failed for tab:', tabId, err);
+      throw err;
+    }
+  }
+}
 
 function setupContextMenu() {
   browser.contextMenus.removeAll().then(() => {
@@ -86,7 +142,7 @@ async function handleMessage(message: MessageType): Promise<MessageResponse> {
           }
         });
 
-        // 2. If uncached items exist, batch and translate them
+        // 2. If uncached items exist, batch and translate them using free multi-engine backends
         if (uncachedTexts.length > 0) {
           const batches = createBatches(uncachedTexts, settings.batchCharBudget);
           const newCacheEntries: Array<{ sourceText: string; translatedText: string }> = [];
