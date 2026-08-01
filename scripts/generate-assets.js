@@ -70,11 +70,11 @@ function isOutsideCorner(x, y, width, height, radius) {
 }
 
 /**
- * Draws Hitar's non-globe custom "H" Translation Badge logo pixels.
+ * Draws Hitar's unique, high-end Blue-to-Violet Translation Prism logo pixels.
  */
 function drawHitarIconPixels(width, height) {
   const rgba = Buffer.alloc(width * height * 4);
-  const radius = Math.floor(width * 0.28);
+  const radius = Math.floor(width * 0.3);
 
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
@@ -88,28 +88,28 @@ function drawHitarIconPixels(width, height) {
       const nx = x / width;
       const ny = y / height;
 
-      // Deep Blue (#1e40af) -> Electric Blue (#3b82f6) -> Cyan (#06b6d4)
-      const r = Math.floor(30 + nx * 30 + ny * 20);
-      const g = Math.floor(64 + nx * 66 + ny * 20);
-      const b = Math.floor(175 + nx * 70 - ny * 20);
+      // Unique Brand Gradient: Electric Blue (#2563eb) -> Indigo (#6366f1) -> Purple (#9333ea)
+      const r = Math.floor(37 + nx * 60 + ny * 50);
+      const g = Math.floor(99 + nx * 30 - ny * 30);
+      const b = Math.floor(235 - nx * 20 + ny * 20);
 
-      // Draw custom non-globe Hitar emblem: Bold "H" with forward translate arrow bar
+      // Emblem stroke calculation
       let isEmblem = false;
-      const stroke = Math.max(1, Math.floor(width * 0.12));
-      const leftCol = Math.floor(width * 0.22);
-      const rightCol = Math.floor(width * 0.66);
-      const midRow = Math.floor(height * 0.48);
+      const stroke = Math.max(1, Math.floor(width * 0.1));
+      const topY = Math.floor(height * 0.35);
+      const botY = Math.floor(height * 0.65);
+      const leftX = Math.floor(width * 0.25);
+      const rightX = Math.floor(width * 0.75);
 
-      // Left bar of H
-      if (x >= leftCol && x < leftCol + stroke && y >= height * 0.2 && y <= height * 0.8) {
+      // Upper translate loop bar
+      if ((y >= topY - stroke / 2 && y <= topY + stroke / 2 && x >= leftX && x <= rightX) ||
+          (y >= botY - stroke / 2 && y <= botY + stroke / 2 && x >= leftX && x <= rightX)) {
         isEmblem = true;
       }
-      // Right bar of H
-      if (x >= rightCol && x < rightCol + stroke && y >= height * 0.2 && y <= height * 0.8) {
-        isEmblem = true;
-      }
-      // Center crossbar of H
-      if (y >= midRow - stroke / 2 && y <= midRow + stroke / 2 && x >= leftCol && x <= rightCol + stroke) {
+
+      // Arrows
+      if ((Math.abs(y - topY) + Math.abs(x - leftX) <= stroke * 1.5 && x <= leftX + stroke) ||
+          (Math.abs(y - botY) + Math.abs(x - rightX) <= stroke * 1.5 && x >= rightX - stroke)) {
         isEmblem = true;
       }
 
@@ -144,7 +144,7 @@ for (const size of sizes) {
   for (const iconDir of iconDirs) {
     fs.writeFileSync(path.join(iconDir, `${size}.png`), pngBuf);
   }
-  console.log(`Generated non-globe custom logo icon ${size}.png`);
+  console.log(`Generated unique logo icon ${size}.png`);
 }
 
 const promoPixels = drawHitarIconPixels(440, 280);
