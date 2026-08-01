@@ -7,9 +7,9 @@ export interface RetryOptions {
 
 function calculateJitterDelay(attempt: number, baseDelayMs: number): number {
   const delay = baseDelayMs * Math.pow(2, attempt - 1);
-  const randomVal = typeof crypto !== 'undefined' && crypto.getRandomValues
-    ? crypto.getRandomValues(new Uint32Array(1))[0] / 0xffffffff
-    : Math.random();
+  const array = new Uint32Array(1);
+  crypto.getRandomValues(array);
+  const randomVal = array[0] / 0xffffffff;
   return delay + randomVal * 100;
 }
 
