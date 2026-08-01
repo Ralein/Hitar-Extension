@@ -70,11 +70,11 @@ function isOutsideCorner(x, y, width, height, radius) {
 }
 
 /**
- * Draws Hitar's new Emerald-Teal to Indigo futuristic translate emblem.
+ * Draws Hitar's unified Electric Blue-Cyan professional logo emblem.
  */
 function drawHitarIconPixels(width, height) {
   const rgba = Buffer.alloc(width * height * 4);
-  const radius = Math.floor(width * 0.3);
+  const radius = Math.floor(width * 0.28);
 
   const cx = width / 2;
   const cy = height / 2;
@@ -93,16 +93,14 @@ function drawHitarIconPixels(width, height) {
       const nx = x / width;
       const ny = y / height;
 
-      // Vibrant Gradient: Emerald (#10b981) -> Teal (#14b8a6) -> Indigo (#6366f1)
-      const r = Math.floor(16 + nx * 80 + ny * 100);
-      const g = Math.floor(185 - nx * 100 + ny * 10);
-      const b = Math.floor(129 + nx * 110 + ny * 100);
+      // Professional Electric Blue (#2563eb) -> Cyan (#06b6d4) gradient
+      const r = Math.floor(37 - nx * 30 + ny * 20);
+      const g = Math.floor(99 + nx * 80 + ny * 20);
+      const b = Math.floor(235 - ny * 20);
 
-      // Distant from center for emblem circle ring
       const dist = Math.hypot(x - cx, y - cy);
       let isEmblem = false;
 
-      // Inner ring + translation cross line
       if (Math.abs(dist - ringRadius) <= ringThickness / 2) {
         isEmblem = true;
       } else if (Math.abs(y - cy) <= ringThickness / 2 && Math.abs(x - cx) <= ringRadius * 1.1) {
@@ -140,7 +138,7 @@ for (const size of sizes) {
   for (const iconDir of iconDirs) {
     fs.writeFileSync(path.join(iconDir, `${size}.png`), pngBuf);
   }
-  console.log(`Generated new logo icon ${size}.png`);
+  console.log(`Generated logo icon ${size}.png`);
 }
 
 const promoPixels = drawHitarIconPixels(440, 280);
