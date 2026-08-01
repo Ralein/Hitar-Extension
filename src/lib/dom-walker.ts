@@ -29,10 +29,11 @@ export const originalTextMap = new WeakMap<Text, string>();
 export function isElementIgnored(element: Element | null): boolean {
   let curr: Element | null = element;
   while (curr) {
-    if (IGNORED_TAGS.has(curr.tagName)) return true;
-    if (curr.getAttribute('translate') === 'no') return true;
+    const tagName = (curr.tagName || '').toUpperCase();
+    if (IGNORED_TAGS.has(tagName)) return true;
+    if (curr.getAttribute && curr.getAttribute('translate') === 'no') return true;
     if (curr.classList && curr.classList.contains('notranslate')) return true;
-    if (curr.hasAttribute('data-hitar-ignore')) return true;
+    if (curr.hasAttribute && curr.hasAttribute('data-hitar-ignore')) return true;
     if (curr.isContentEditable) return true;
     curr = curr.parentElement;
   }
@@ -50,45 +51,47 @@ export function isTranslatableText(text: string): boolean {
 }
 
 /**
- * Collects all translatable Text nodes inside a container.
+ * Collects all translatable Text nodes inside a container using recursive DOM traversal.
+ * Guarantees consistent behavior across all browsers and test environments (happy-dom/jsdom).
  */
 export function collectTextNodes(container: Node = document.body): TranslatableNodeInfo[] {
   const result: TranslatableNodeInfo[] = [];
 
-  const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, {
-    acceptNode: (node: Node) => {
+  function traverse(node: Node) {
+    if (node.nodeType === Node.TEXT_NODE) {
       const textNode = node as Text;
       const text = textNode.nodeValue || '';
 
-      if (!isTranslatableText(text)) {
-        return NodeFilter.FILTER_SKIP;
-      }
+      if (!isTranslatableText(text)) return;
 
       const parent = textNode.parentElement;
-      if (!parent || isElementIgnored(parent)) {
-        return NodeFilter.FILTER_REJECT;
+      if (!parent || isElementIgnored(parent)) return;
+
+      if (
+        parent.hasAttribute('data-hitar-translated') ||
+        parent.classList.contains('hitar-translating')
+      ) {
+        return;
       }
 
-      // Skip already translated or pending nodes
-      if (parent.hasAttribute('data-hitar-translated') || parent.classList.contains('hitar-translating')) {
-        return NodeFilter.FILTER_SKIP;
+      result.push({
+        node: textNode,
+        originalText: text,
+      });
+      return;
+    }
+
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      const element = node as Element;
+      if (isElementIgnored(element)) return;
+
+      for (let i = 0; i < node.childNodes.length; i++) {
+        traverse(node.childNodes[i]);
       }
-
-      return NodeFilter.FILTER_ACCEPT;
-    },
-  });
-
-  let currentNode = walker.nextNode();
-  while (currentNode) {
-    const textNode = currentNode as Text;
-    const text = textNode.nodeValue || '';
-    result.push({
-      node: textNode,
-      originalText: text,
-    });
-    currentNode = walker.nextNode();
+    }
   }
 
+  traverse(container);
   return result;
 }
 
@@ -115,6 +118,9 @@ export function applyNodeTranslations(
   translations: (string | null)[],
 ) {
   nodeInfos.forEach(({ node, originalText }, index) => {
+    if (!originalTextMap.has(node)) {
+      originalTextMap.set(node, originalText);
+    }
     const parent = node.parentElement;
     if (parent) {
       parent.classList.remove('hitar-translating');
@@ -136,15 +142,19 @@ export function applyNodeTranslations(
 export function revertTranslations(container: Node = document.body) {
   const elements = (container as Element).querySelectorAll('[data-hitar-translated]');
   elements.forEach((el) => {
-    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-    let curr = walker.nextNode();
-    while (curr) {
-      const textNode = curr as Text;
-      if (originalTextMap.has(textNode)) {
-        textNode.nodeValue = originalTextMap.get(textNode)!;
+    function traverse(node: Node) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const textNode = node as Text;
+        if (originalTextMap.has(textNode)) {
+          textNode.nodeValue = originalTextMap.get(textNode)!;
+        }
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        for (let i = 0; i < node.childNodes.length; i++) {
+          traverse(node.childNodes[i]);
+        }
       }
-      curr = walker.nextNode();
     }
+    traverse(el);
     el.removeAttribute('data-hitar-translated');
   });
 }
